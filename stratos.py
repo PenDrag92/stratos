@@ -7,7 +7,8 @@ from datetime import datetime
 ################ GLOBAL VARIABLES ####################
 ######################################################
 DATABASE = "C:\\sqlite\db\pythonsqlite.db"
-TABLE = "myTable"
+TABLE1 = "myTable1"
+TABLE2 = "myTable2"
 
 
 
@@ -38,7 +39,6 @@ class GetNewFile:
                     self.possibleFiles.append(fileName)
 
 
-
     #method that finds the latest data file
     def getLatestFile(self):
 
@@ -62,6 +62,7 @@ class ProcessFile:
         self.fileName = fileName
         self.codeNames = []
         self.data = {}
+        self.queryParameters = []
 
         self.readData()
         self.obtainParameterNames()
@@ -70,6 +71,7 @@ class ProcessFile:
     #method that reads the data and stores it into a dictionary
     def readData(self):
 
+        print("opening file: " + str(self.fileName))
         f = open(self.fileName,'r')
         line = f.readlines()[-1]
         data = line.split(";")
@@ -79,6 +81,8 @@ class ProcessFile:
             splittedParameter = parameter.split(":")
             self.data[ splittedParameter[0] ] = splittedParameter[1]
 
+        print("data gathered:  " + str(self.data))
+
 
     #method that gets the parameter names for each code from the SQL db
     def obtainParameterNames(self):
@@ -87,7 +91,7 @@ class ProcessFile:
         cursor = connection.cursor()
 
         for code in self.data:
-            query = "SELECT name FROM " + TABLE + " WHERE code = " + code + ";"
+            query = "SELECT name FROM " + TABLE1 + " WHERE code = " + code + ";"
             cursor.execute(query)
             results = cursor.fetchall()
             self.codeNames.append(results[0][0])
@@ -95,7 +99,17 @@ class ProcessFile:
         cursor.close()
         connection.close()
 
+        print("parameters received:   " + str(self.codeNames))
 
+
+    #method that adds the recent processed info to a database in the server
+    # def actualizeDatabase(self):
+    #     connection = sqlite3.connect(DATABASE)
+    #     cursor = connection.cursor()
+    #
+    #
+    #     cursor.close()
+    #     connection.close()
 
 
 
@@ -106,7 +120,7 @@ if __name__ == "__main__":
 
     os.system("cls")
     fileGetter = GetNewFile()
-    ProcessFile( fileGetter.file )
+    processObject = ProcessFile( fileGetter.file )
 
 
 
