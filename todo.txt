@@ -1,0 +1,49 @@
+handler:
+	wert überprüfen und auswerten/verarbeiten
+	timestamp (letzte Aktualisierung)
+	min max
+	status
+	einheit
+	beschreibung
+	klartext
+	name
+	letzter wert
+	datentyp
+	id/code
+	rohmessage
+	
+CRC; abtrennung, implementierung, abwicklung als erstes! wenn keine übereinstimmung keine auswertung, sondern nur speichern rohwert
+
+wenn datenpunkt nicht bekannt ist abspeichern als unknown_id als string
+
+table für metadaten + aktuellen wert
+table für werte
+table für local timestamp und empfangener message (wie ein log)
+
+.txt auf server übertragen
+
+.txt aus verschiedenen quellen zusammenstellen
+
+beide zeiten benutzen/speichern (lokal und payload)
+
+mission/ballon id speichern
+
+wenn missionsid nicht vorhanden in aktueller tabelle insert sonst update
+in historical nur inserts
+
+table mission mit mission id + name + beschreibung
+
+bei verlust internet rescue team: table sendbuffer oder erweitern der historical table  um flag daten versendet 
+
+transaktion zum zusammenfassen von sql anweisungen
+begin transaktion lock table iwas (lock der alle zeilen lockt die nicht gesendet sind/die gerade vorhanden sind)
+bei fehler rollback
++abfangen in anderer software
+
+gui
+selcet für mission --> anzeige aktueller daten
+openstreetmap für qt? (einfach)
+
+3x software received - database - gui
+
+unsent -> queued -> sent
