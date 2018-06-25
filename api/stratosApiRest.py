@@ -1,6 +1,5 @@
-import os, time, sqlite3
-from datetime import datetime
-from flask import Flask, render_template, request, jsonfy
+import os
+from flask import Flask, render_template, request
 
 
 app = Flask(__name__)
@@ -19,8 +18,8 @@ def getParams():
 
 #main web site
 @app.route('/')
-def initPage():
-    return(render_template('init.html'))
+def startPage():
+    return(render_template('start.html'))
 
 
 #docs web site
@@ -30,15 +29,15 @@ def docsPage():
 
 
 #parametes explanation web site
-@app.route('/params')
-def paramsPage():
-    return(render_template('params.html'))
+@app.route('/about')
+def aboutPage():
+    return(render_template('about.html'))
 
 
 #exampels web site
-@app.route('/examples')
-def examplesPage():
-    return(render_template('examples.html'))
+@app.route('/contact')
+def contactPage():
+    return(render_template('contact.html'))
 
 
 #search method
